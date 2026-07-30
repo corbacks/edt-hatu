@@ -1,0 +1,72 @@
+name: 🎓 EDT Bot — Le GOAT de l'EDT
+
+on:
+  schedule:
+    # Dimanche 18h Paris (envoie la semaine suivante), été et hiver — le
+    # script ignore le run hors-saison (voir TARGET_HOUR / TOLERANCE_MIN
+    # dans edt_bot.py), pas besoin de changer le cron aux changements d'heure.
+    - cron: "0 16 * * 0"   # 18:00 Paris — heure d'été (UTC+2)
+    - cron: "0 17 * * 0"   # 18:00 Paris — heure d'hiver (UTC+1)
+
+  workflow_dispatch:
+    inputs:
+      force_run:
+        description: "Ignorer le garde-fou jour/horaire (test manuel)"
+        type: boolean
+        default: true
+      test_monday:
+        description: >
+          Forcer une semaine précise à tester (AAAA-MM-JJ, n'importe quel
+          jour de la semaine visée). Utile si la semaine courante ET la
+          semaine suivante sont toutes les deux vides (vacances) et que tu
+          veux quand même voir un rendu avec de vrais cours. Laisser vide
+          pour le comportement normal (semaine suivante).
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  edt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 📂 Restore cache
+        uses: actions/cache/restore@v4
+        with:
+          path: edt_cache.json
+          key: edt-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            edt-${{ runner.os }}-
+
+      - name: 🎓 Exécution du bot
+        env:
+          WEBHOOK_CM:  ${{ secrets.WEBHOOK_CM }}
+          WEBHOOK_GRA: ${{ secrets.WEBHOOK_GRA }}
+          WEBHOOK_GRB: ${{ secrets.WEBHOOK_GRB }}
+          WEBHOOK_GRC: ${{ secrets.WEBHOOK_GRC }}
+          ROLE_CM:     ${{ secrets.ROLE_CM }}
+          ROLE_GRA:    ${{ secrets.ROLE_GRA }}
+          ROLE_GRB:    ${{ secrets.ROLE_GRB }}
+          ROLE_GRC:    ${{ secrets.ROLE_GRC }}
+          FORCE_RUN:    ${{ github.event.inputs.force_run || '0' }}
+          TEST_MONDAY:  ${{ github.event.inputs.test_monday || '' }}
+        run: python edt_bot.py
+
+      - name: 💾 Save cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: edt_cache.json
+          key: edt-${{ runner.os }}-${{ github.run_id }}
