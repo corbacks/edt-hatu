@@ -42,35 +42,22 @@ CM_COMMUNS_ICAL = (
 
 # Flux dédiés par groupe (planning complet du groupe : CM + TP/TD propres)
 GROUP_ICAL = {
-    "GrA": "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_GrA___L3_INFO.ics"
-           "?version=2022.0.5.0&idICal=9C6195B41AB8E13C6B1D1FD0DC17561E"
-           "&param=643d5b312e2e36325d2666683d3126663d3131313030",
-    "GrB": "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_GrB___L3_INFO.ics"
-           "?version=2022.0.5.0&idICal=84CF77F9781656328D471B529EB48977"
-           "&param=643d5b312e2e36325d2666683d3126663d3131313030",
-    "GrC": "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_GrC___L3_INFO.ics"
-           "?version=2022.0.5.0&idICal=30EA0E64AE646826233F809BDB58672C"
-           "&param=643d5b312e2e36325d2666683d3126663d3131313030",
+    "GrA": "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_IUT_3EME_ANNEE_G_E_I_I_.ics"
+           "?version=2022.0.5.0&idICal=E933F6430BC05AAB0EB3932D0807BE81"
+           "&param=643d5b312e2e36325d2666683d3126663d3131303030",
 }
 
 # Options : fusionnées dans chaque salon de groupe (pas dans CM Communs, qui
 # les reçoit déjà via le flux combiné ci-dessus — évite les doublons).
 OPTION_ICAL = {
-    "Option 2 – Architecture avancée":
-        "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_Architecture_avancee___OPT2_L3_INFO.ics"
-        "?version=2022.0.5.0&idICal=FF2B8E436C67A8FD2A6E249B6FAB8597"
-        "&param=643d5b312e2e36325d2666683d3126663d3131313030",
-    "Option 1 – Prog. C++":
-        "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_Programmation_objets_C_____OPT1_L3_INFO.ics"
-        "?version=2022.0.5.0&idICal=59AD9A74446C6CFD8200F71AA15A5734"
-        "&param=643d5b312e2e36325d2666683d3126663d3131313030",
+    
 }
 
 CHANNELS = ["CM Communs", "GrA", "GrB", "GrC"]
 
 WEBHOOKS = {
     "CM Communs": os.environ.get("WEBHOOK_CM", ""),
-    "GrA":        os.environ.get("WEBHOOK_GRA", ""),
+    "GrA":        os.environ.get("WEBHOOK_GRA", "https://discord.com/api/webhooks/1532467650964230216/WypgoZZSq6nYgTFpb1VxeXtPc_RdJ_QD6_SHO1AZnXW-zB5hK6jsDZJd6ADiTZAl_SEa"),
     "GrB":        os.environ.get("WEBHOOK_GRB", ""),
     "GrC":        os.environ.get("WEBHOOK_GRC", ""),
 }
