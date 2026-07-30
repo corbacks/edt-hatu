@@ -34,11 +34,7 @@ import style_grid as sg
 
 # Flux combiné (tout le monde) : sert de source pour le salon "CM Communs"
 # (on y garde uniquement les événements SANS préfixe GrX : CM partagés + options).
-CM_COMMUNS_ICAL = (
-    "https://hplanning.univ-lehavre.fr/Telechargements/ical/Edt_ST_L3___INFORMATIQUE.ics"
-    "?version=2022.0.5.0&idICal=878F4702AFE5022EFD588352AC8AC291"
-    "&param=643d5b312e2e36325d2666683d3126663d3131303030"
-)
+CM_COMMUNS_ICAL = ()
 
 # Flux dédiés par groupe (planning complet du groupe : CM + TP/TD propres)
 GROUP_ICAL = {
